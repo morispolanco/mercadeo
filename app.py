@@ -24,7 +24,14 @@ prompts = {
     "Marketing de contenidos SEO": "Escribe un artículo de blog optimizado para SEO que responda a una pregunta frecuente de tu audiencia y atraiga tráfico orgánico.",
     "Experiencias de marca": "Organiza un evento virtual o presencial que permita a los clientes interactuar con tu producto o servicio de manera memorable.",
     "Gamificación": "Diseña una campaña que incluya elementos de gamificación, como desafíos o recompensas, para aumentar la participación y fidelización de los clientes.",
-    "Marketing socialmente responsable": "Crea una campaña que destaque cómo tu marca contribuye a una causa social o ambiental, conectando con los valores de tu audiencia."
+    "Marketing socialmente responsable": "Crea una campaña que destaque cómo tu marca contribuye a una causa social o ambiental, conectando con los valores de tu audiencia.",
+    
+    # Nuevos prompts de email marketing
+    "Email de bienvenida": "Escribe un email de bienvenida amigable que agradezca al cliente por registrarse y le dé una introducción a los servicios o productos de la marca.",
+    "Email promocional": "Crea un email promocional que anuncie una oferta especial, destacando el beneficio principal y generando urgencia para aprovecharla.",
+    "Email de contenido educativo": "Escribe un email que ofrezca información útil o educativa sobre un tema relacionado con los intereses de la audiencia.",
+    "Email de recuperación de carrito": "Redacta un email para clientes que han abandonado su carrito de compras, recordándoles los productos y ofreciendo un incentivo para completar la compra.",
+    "Email de fidelización": "Desarrolla un email que premie la lealtad del cliente, ofreciendo beneficios exclusivos como descuentos, acceso anticipado o contenido especial."
 }
 
 # Selección de prompt
