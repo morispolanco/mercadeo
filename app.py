@@ -57,13 +57,17 @@ if st.button("Generar contenido"):
             ]
         }
 
-        response = requests.post(api_url, headers=headers, data=json.dumps(data))
+        try:
+            response = requests.post(api_url, headers=headers, data=json.dumps(data), timeout=30)
 
-        # Manejo de la respuesta
-        if response.status_code == 200:
-            result = response.json()
-            generated_content = result["choices"][0]["message"]["content"]
-            st.subheader("Contenido Generado")
-            st.write(generated_content)
-        else:
-            st.error("Ocurrió un error al generar el contenido. Intenta nuevamente.")
+            # Manejo de la respuesta
+            if response.status_code == 200:
+                result = response.json()
+                generated_content = result["choices"][0]["message"]["content"]
+                st.subheader("Contenido Generado")
+                st.write(generated_content)
+            else:
+                st.error(f"Ocurrió un error al generar el contenido. Código de estado: {response.status_code}")
+                st.write("Detalles del error:", response.json())
+        except requests.RequestException as e:
+            st.error(f"Error de conexión: {e}")
