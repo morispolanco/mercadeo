@@ -51,7 +51,7 @@ if st.button("Generar contenido"):
         }
 
         data = {
-            "model": "qwen/qwen-turbo",
+            "model": "deepseek/deepseek-r1:free",
             "messages": [
                 {"role": "user", "content": f"{prompts[selected_prompt]} {user_input}"}
             ]
