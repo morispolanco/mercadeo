@@ -71,3 +71,14 @@ if st.button("Generar contenido"):
                 st.write("Detalles del error:", response.json())
         except requests.RequestException as e:
             st.error(f"Error de conexión: {e}")
+
+# Footer
+st.markdown(
+    """
+    <hr style="margin-top: 50px;">
+    <div style="text-align: center; font-size: 0.9em; color: gray;">
+        &copy; 2025 <a href="https://hablemosbien.org" target="_blank" style="text-decoration: none; color: gray;">Hablemosbien</a>. Todos los derechos reservados.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
