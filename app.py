@@ -51,7 +51,7 @@ if st.button("Generar contenido"):
         }
 
         data = {
-            "model": "deepseek/deepseek-r1:free",
+            "model": "google/gemini-2.0-flash-thinking-exp:free",
             "messages": [
                 {"role": "user", "content": f"{prompts[selected_prompt]} {user_input}"}
             ]
