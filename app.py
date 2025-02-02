@@ -1,31 +1,17 @@
 import streamlit as st
 import requests
-import os
+import json
 
-# Configuración de la página
-st.set_page_config(page_title="Aplicación de Mercadeo", layout="wide")
+# Configuración inicial
+st.set_page_config(page_title="Generador de Contenidos de Marketing", layout="wide")
 
 # Título de la aplicación
-st.title("Aplicación de Mercadeo con Streamlit")
+st.title("Generador de Contenidos de Marketing")
 
-# Obtener la API Key desde los secrets de Streamlit
-api_key = st.secrets["OPENROUTER_API_KEY"]
+# Instrucciones
+st.write("Selecciona un prompt en la barra lateral, proporciona detalles adicionales y genera contenido para tus campañas de marketing.")
 
-# Función para enviar una solicitud a la API de OpenRouter
-def get_openrouter_response(prompt):
-    url = "https://openrouter.ai/api/v1/chat/completions"
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
-    }
-    data = {
-        "model": "google/gemini-2.0-flash-thinking-exp:free",
-        "messages": [{"role": "user", "content": prompt}]
-    }
-    response = requests.post(url, headers=headers, json=data)
-    return response.json()
-
-# Prompts de mercadeo
+# Prompts disponibles en la barra lateral
 prompts = {
     "Contenido de valor": "Crea una guía paso a paso sobre [tema relevante para tu audiencia] que resuelva un problema común y posicione a tu marca como una autoridad en el sector.",
     "Testimonios y casos de éxito": "Diseña una campaña que muestre testimonios reales de clientes satisfechos, destacando cómo tu producto o servicio transformó su experiencia.",
@@ -41,16 +27,43 @@ prompts = {
     "Marketing socialmente responsable": "Crea una campaña que destaque cómo tu marca contribuye a una causa social o ambiental, conectando con los valores de tu audiencia."
 }
 
-# Barra lateral con los prompts
-st.sidebar.title("Selecciona un Prompt de Mercadeo")
-selected_prompt = st.sidebar.selectbox("Prompts", list(prompts.keys()))
+# Selección de prompt
+selected_prompt = st.sidebar.selectbox("Selecciona un prompt", list(prompts.keys()))
+st.sidebar.write("Descripción del prompt seleccionado:")
+st.sidebar.write(prompts[selected_prompt])
 
-# Mostrar el prompt seleccionado y su descripción
-st.write(f"## {selected_prompt}")
-st.write(prompts[selected_prompt])
+# Entrada del usuario
+user_input = st.text_area("Proporciona detalles adicionales para el prompt seleccionado")
 
-# Botón para generar respuesta
-if st.button("Generar Respuesta"):
-    with st.spinner("Generando respuesta..."):
-        response = get_openrouter_response(prompts[selected_prompt])
-        st.write(response)
+# Generar contenido
+if st.button("Generar contenido"):
+    if not user_input:
+        st.warning("Por favor, proporciona detalles adicionales para generar contenido.")
+    else:
+        # Configuración de la API
+        api_url = "https://openrouter.ai/api/v1/chat/completions"
+        api_key = st.secrets["openrouter_api_key"]
+
+        # Petición a la API
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}"
+        }
+
+        data = {
+            "model": "google/gemini-2.0-flash-thinking-exp:free",
+            "messages": [
+                {"role": "user", "content": f"{prompts[selected_prompt]} {user_input}"}
+            ]
+        }
+
+        response = requests.post(api_url, headers=headers, data=json.dumps(data))
+
+        # Manejo de la respuesta
+        if response.status_code == 200:
+            result = response.json()
+            generated_content = result["choices"][0]["message"]["content"]
+            st.subheader("Contenido Generado")
+            st.write(generated_content)
+        else:
+            st.error("Ocurrió un error al generar el contenido. Intenta nuevamente.")
